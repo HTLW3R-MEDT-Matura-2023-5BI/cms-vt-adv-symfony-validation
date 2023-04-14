@@ -8,3 +8,23 @@ Um Formulareingaben in Symfony Flex zu validieren, bedarf es diesen Command, um 
 ```
 composer require symfony/validator
 ```
+
+## Validierung eines Properties
+Um ein Property in beispielsweise im Entity `Movie.php` zu validieren, werden "Asserts" aus dem zuvor installierten Package unter `Validator\Constraints` verwendet. Daher wird folgender Namespace verwendet: 
+
+```php
+use Symfony\Component\Validator\Constraints as Assert;
+```
+
+### Validerung der Länge
+Um beispielsweise den Namen eines Films so zu validieren, dass eine Mindestlänge von 3 vorhanden sein muss, kann ein sogenanntes Attribut zur Anwendung kommen:
+```php
+#[Assert\Length(min: 3, minMessage: 'Der Name muss mindestens {{ limit }} Zeichen lang sein.')]
+private ?string $name = null;
+```
+Man verwendet hier die php Klasse `Length.php` und kann in den Klammern den Wert unter `min: 3` angeben. Die darauf folgende Nachricht dient hierbei als Felermeldung, die der Benutzer im Formular bei Falscheingabe angezeigt bekommt. `{{ limit }}` wird bei der Ausgabe durch die Mindestlänge ersetzt.
+
+Weiters kann auch die Maximallänge validiert werden:
+```php
+#[Assert\Length(max: 80, maxMessage: 'Der Name kann nicht länger als {{ limit }} Zeichen lang sein.')]
+```
