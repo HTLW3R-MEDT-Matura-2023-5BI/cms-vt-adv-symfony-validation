@@ -28,3 +28,27 @@ Weiters kann auch die Maximallänge validiert werden:
 ```php
 #[Assert\Length(max: 80, maxMessage: 'Der Name kann nicht länger als {{ limit }} Zeichen lang sein.')]
 ```
+
+### Validierung des Datetimes
+Ein Property des Typs Datetime kann man beispielsweise darauf überprüfen, dass der eingegebene Tag in der Verangenheit liegt:
+```php
+#[Assert\LessThan("today", message: "Der Geburtstag muss früher als heute sein.")]
+private ?\DateTimeInterface $birthday = null;
+```
+
+### Validierung einer Nummer
+```php
+#[Assert\Positive(message: 'Das Erscheinungsjahr muss eine positive ganze Zahl sein')]
+private ?int $release_year = null;
+```
+
+### Validierung auf Vorhandensein
+#### Validierung der Nummer auf Vorhandensein
+```php
+#[Assert\NotNull(message: 'Bitte geben Sie ein Erscheinungsjahr ein')]
+```
+
+#### Vorhandensein eines Strings auf Vorhandensein
+```php
+#[Assert\NotBlank(message: 'Bitte geben Sie einen Namen ein')]
+```
