@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit MovieQuote{% endblock %}
+
+{% block body %}
+    <div class="container d-flex flex-column align-items-center">
+
+        <h1>Edit MovieQuote</h1>
+
+        {{ include('movie_quote/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <div class="d-flex gap-4 mt-4">
+            <a href="{{ path('app_movie_quote_index') }}">
+                <button class="btn btn-secondary">
+                    back to list
+                </button>
+            </a>
+
+            {{ include('movie_quote/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

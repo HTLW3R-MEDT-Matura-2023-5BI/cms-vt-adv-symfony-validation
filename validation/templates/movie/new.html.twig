@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Movie{% endblock %}
+
+{% block body %}
+    <div class="d-flex flex-column justify-content-start">
+    <h1>Create new Movie</h1>
+
+    {{ include('movie/_form.html.twig') }}
+
+    <a href="{{ path('app_movie_index') }}">
+        <button class="btn btn-secondary mt-4">
+            back to list
+        </button>
+    </a>
+    </div>
+{% endblock %}

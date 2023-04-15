@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search in Repository{% endblock %}
+
+{% block body %}
+    <div class="w-100 h-100 p-5 overflow-scroll">
+        <h3 class="text-center"> Search for Movies by their name</h3>
+        <div class="d-flex w-50 m-4 mx-auto gap-2">
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="text" id="movieSearchInput" class="form-control" placeholder="Movie Name" autofocus
+                           value="{{ term is defined ? term : '' }}">
+                    <label for="movieSearchInput">Movie Name</label>
+                </div>
+                <button class="btn btn-outline-secondary bg-primary" disabled type="button" id="search"><i
+                            class="fas text-white fa-search"></i>
+                </button>
+            </div>
+
+            <a href="{{ path('app_random_movie') }}">
+                <button class="btn bg-primary text-white rounded h-100" id="randomBtn"
+                        style="width: max-content; white-space: nowrap">
+                    Random Movie
+                </button>
+            </a>
+
+            <a href="{{ path('app_overview') }}">
+                <button class="btn btn-secondary h-100">
+                    Home
+                </button>
+            </a>
+        </div>
+
+        <div class="w-50 mx-auto mt-4 ">
+            {% if movies is defined %}
+                {% if movies|length == 0 %}
+                    No movies with the name <i>'{{ term }}'</i> found
+                {% else %}
+                    Suchergebnisse: {{ movies|length }}
+
+                    <div class="d-flex flex-wrap gap-4 mt-2">
+                        {% for movie in movies %}
+                            <div class="card" style="width: calc(50% - 1.5rem)">
+                                <div class="card-body">
+                                    <h5 class="card-title"> {{ movie.name }} </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted"> {{ movie.releaseYear }} </h6>
+
+                                    <div class="card-text">
+                                        <p>Movie Id: {{ movie.id }}</p>
+
+                                        {% if movie.movieQuotes.empty %}
+                                            No Quotes
+                                        {% else %}
+                                            {% for quote in movie.movieQuotes %}
+                                                Movie Quotes:
+                                                <div>
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">
+                                                            <blockquote class="blockquote mb-0">
+                                                                <p>{{ quote.quote }}</p>
+                                                                <footer class="blockquote-footer"> {{ quote.quoter }} </footer>
+                                                            </blockquote>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% elseif random_movies is defined %}
+                <div class="d-flex flex-wrap gap-4 mt-2">
+                    {% for random_movie in random_movies %}
+                        <div class="card" style="width: calc(50% - 1.5rem)">
+                            <div class="card-body">
+                                <h5 class="card-title"> {{ random_movie.name }} </h5>
+                                <h6 class="card-subtitle mb-2 text-muted"> {{ random_movie.release_year }} </h6>
+
+                                <div class="card-text">
+                                    <p>Movie Id: {{ random_movie.id }} </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        let searchButton = document.getElementById('search')
+        let searchInput = document.getElementById('movieSearchInput')
+
+        checkInput()
+
+        searchButton.addEventListener("click", search)
+        searchInput.addEventListener("input", checkInput)
+        searchInput.addEventListener("keypress", function (event) {
+            if (event.key === 'Enter') {
+                searchButton.click();
+            }
+        });
+
+        function checkInput() {
+            searchButton.disabled = searchInput.value === ''
+        }
+
+        function search() {
+            console.log('Event fired')
+            location.href = `/search/${searchInput.value}`
+        }
+
+    </script>
+{% endblock %}

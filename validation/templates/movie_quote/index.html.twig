@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MovieQuote Overview{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <h1>MovieQuote Overview</h1>
+                <a href="{{ path('app_overview') }}">
+                    <button type="button" class="btn btn-secondary">
+                        Home
+                    </button>
+                </a>
+        </div>
+
+        <table class="table table-sm table-hover table-striped mt-4">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Quote</th>
+                <th scope="col">Quoter</th>
+                <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for movie_quote in movie_quotes %}
+                <tr>
+                    <th scope="row">{{ movie_quote.id }}</th>
+                    <td>{{ movie_quote.quote }}</td>
+                    <td>{{ movie_quote.quoter }}</td>
+                    <td>
+                        <a href="{{ path('app_movie_quote_show', {'id': movie_quote.id}) }}">show</a>
+                        <a href="{{ path('app_movie_quote_edit', {'id': movie_quote.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_movie_quote_new') }}">
+         <button class="btn btn-primary">
+             Create new
+         </button>
+        </a>
+    </div>
+{% endblock %}

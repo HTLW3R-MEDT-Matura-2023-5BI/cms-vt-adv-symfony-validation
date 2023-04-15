@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MovieQuote{% endblock %}
+
+{% block body %}
+    <div class="d-flex flex-column justify-content-start">
+        <h1>Create new MovieQuote</h1>
+
+        {{ include('movie_quote/_form.html.twig') }}
+
+        <a href="{{ path('app_movie_quote_index') }}" class="mt-4">
+            <button class="btn btn-secondary">
+                back to list
+            </button>
+        </a>
+    </div>
+{% endblock %}

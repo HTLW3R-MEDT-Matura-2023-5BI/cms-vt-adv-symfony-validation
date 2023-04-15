@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actor index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <h1>Actor Overview</h1>
+            <a href="{{ path('app_overview') }}">
+                <button type="button" class="btn btn-secondary">
+                    Home
+                </button>
+            </a>
+        </div>
+
+        <table class="table table table-sm table-hover table-striped mt-4">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Birthday</th>
+                <th scope="col">Gender</th>
+                <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for actor in actors %}
+                <tr>
+                    <th scope="row">{{ actor.id }}</th>
+                    <td>{{ actor.firstName }}</td>
+                    <td>{{ actor.lastName }}</td>
+                    <td>{{ actor.birthday ? actor.birthday|date('Y-m-d') : '' }}</td>
+                    <td>{{ actor.gender }}</td>
+                    <td>
+                        <a href="{{ path('app_actor_show', {'id': actor.id}) }}">show</a>
+                        <a href="{{ path('app_actor_edit', {'id': actor.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_actor_new') }}">
+            <button class="btn btn-primary">
+                Create new
+            </button>
+        </a>
+    </div>
+{% endblock %}

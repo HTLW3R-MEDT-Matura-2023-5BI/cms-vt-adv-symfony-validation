@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movie Overview{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <h1>Movie Overview</h1>
+            <a href="{{ path('app_overview') }}">
+                <button type="button" class="btn btn-secondary">
+                    Home
+                </button>
+            </a>
+        </div>
+
+        <table class="table table table-sm table-hover table-striped mt-4">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Release_year</th>
+                <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for movie in movies %}
+                <tr>
+                    <th scope="row">{{ movie.id }}</th>
+                    <td>{{ movie.name }}</td>
+                    <td>{{ movie.releaseYear }}</td>
+                    <td>
+                        <a href="{{ path('app_movie_show', {'id': movie.id}) }}">show</a>
+                        <a href="{{ path('app_movie_edit', {'id': movie.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_movie_new') }}">
+            <button class="btn btn-primary">
+                Create new
+            </button>
+        </a>
+    </div>
+{% endblock %}
